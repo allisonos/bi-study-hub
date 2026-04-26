@@ -1,181 +1,178 @@
-﻿{
-    "id":  "2",
-    "title":  "SQL",
-    "description":  "Banco de Dados Interativo com sql.js",
-    "trails":  [
-                   {
-                       "id":  "sql_t1",
-                       "title":  "Trilha 1 â€” Fundamentos",
-                       "description":  "O que é SQL, SELECT, WHERE, funções de agregação, GROUP BY, JOINs, INSERT/UPDATE/DELETE, DISTINCT.",
-                       "lessons":  {
-                                       "value":  [
-                                                     {
-                                                         "id":  "sql_t1_l1",
-                                                         "title":  "O que é SQL e o Banco de Dados Relacional",
-                                                         "type":  "theory",
-                                                         "content":  "## O que é SQL?\n\n**SQL** (*Structured Query Language*) é a linguagem universal para se comunicar com bancos de dados relacionais. Pense nela como o idioma que você usa para *fazer perguntas* e *dar instruções* a um sistema que guarda dados.\n\nCriado nos anos 70 pela IBM e padronizado pela ISO, o SQL ainda é a habilidade mais pedida em vagas de dados no mundo inteiro.\n\n---\n\n## Como os dados são organizados?\n\nTodo banco de dados relacional organiza os dados em **tabelas**:\n\n| Conceito | O que é | Analogia |\n|---|---|---|\n| **Tabela** | Conjunto de dados sobre um assunto | A aba de uma planilha |\n| **Coluna** | Um atributo/característica | O cabeçalho da planilha |\n| **Linha** | Um registro individual | Uma linha da planilha |\n| **Chave Primária (PK)** | Identificador único de cada linha | CPF de uma pessoa |\n\n### Exemplo real: tabela `clientes`\n\n```sql\nid  | nome          | email                | criado_em\n----|---------------|----------------------|------------\n1   | Ana Lima      | ana@email.com        | 2024-01-10\n2   | Bruno Souza   | bruno@email.com      | 2024-02-05\n3   | Carla Mendes  | carla@email.com      | 2024-03-18\n```\n\n---\n\n## Por que \"relacional\"?\n\nO nome vem do fato de que as tabelas se **relacionam** entre si via **chaves estrangeiras (FK)**.\n\n\u003e 💡 **Dica sênior:** A grande vantagem do modelo relacional é evitar repetição. Isso se chama *normalização*.\n\n---\n\n## Os principais tipos de dados\n\n```sql\nCREATE TABLE clientes (\n  id         INT,\n  nome       VARCHAR(100),\n  saldo      DECIMAL(10,2),\n  ativo      BOOLEAN,\n  criado_em  DATE\n);\n```\n\n\u003e ⚠️ **Atenção:** Guardar um número como `VARCHAR` é um erro clássico. Você consegue salvar, mas não faz `SUM()` ou comparações matemáticas."
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l2",
-                                                         "title":  "Fixando conceitos: Múltipla Escolha",
-                                                         "type":  "practice",
-                                                         "content":  "## Hora de praticar!\n\nCom base no que você aprendeu sobre bancos de dados relacionais:\n\n```sql\nid | cliente_id | valor  | status\n---|------------|--------|--------\n1  | 42         | 350.00 | pago\n2  | 42         | 120.00 | pago\n3  | 99         | 890.00 | pendente\n```\n\nQual coluna é a **chave estrangeira** que conecta esta tabela à tabela `clientes`?",
-                                                         "task":  "MultipleChoice",
-                                                         "options":  [
-                                                                         "id — porque é o identificador único dos pedidos",
-                                                                         "cliente_id — porque referencia o id da tabela clientes",
-                                                                         "status — porque classifica cada pedido"
-                                                                     ],
-                                                         "expectedAnswer":  1
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l3",
-                                                         "title":  "Seu primeiro SELECT — buscando dados",
-                                                         "type":  "theory",
-                                                         "content":  "## O comando SELECT\n\nO `SELECT` é o comando mais importante do SQL. Ele serve para **buscar dados** de uma tabela.\n\n### Anatomia básica\n\n```sql\nSELECT coluna1, coluna2   -- O QUE você quer ver\nFROM nome_da_tabela       -- DE ONDE vêm os dados\nWHERE condição            -- FILTRO (opcional)\nORDER BY coluna           -- ORDEM (opcional)\nLIMIT numero;             -- LIMITE de linhas (opcional)\n```\n\n\u003e 💡 **Dica sênior:** O SQL processa internamente: `FROM` → `WHERE` → `SELECT` → `ORDER BY` → `LIMIT`. Você *escreve* na ordem acima, mas o banco *executa* diferente.\n\n---\n\n## Selecionando colunas e usando aliases\n\n```sql\n-- Retorna apenas nome e email\nSELECT nome, email FROM clientes;\n\n-- Renomeando colunas com AS\nSELECT nome AS cliente, email AS contato FROM clientes;\n\n-- Ordenando resultados\nSELECT nome, criado_em FROM clientes ORDER BY criado_em DESC;\n\n-- Limitando resultados\nSELECT * FROM clientes ORDER BY criado_em DESC LIMIT 5;\n```\n\n\u003e ⚠️ **Atenção:** Sempre use `LIMIT` ao explorar tabelas desconhecidas. Algumas têm *milhões* de linhas."
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l4",
-                                                         "title":  "Escrevendo seu primeiro SELECT",
-                                                         "type":  "practice",
-                                                         "content":  "## Desafio: busque os dados certos!\n\nVocê tem a tabela `produtos`:\n\n```sql\nid | nome           | preco  | estoque\n---|----------------|--------|--------\n1  | Notebook Pro   | 3200   | 15\n2  | Mouse Gamer    | 180    | 42\n3  | Cadeira Ergo   | 890    | 8\n4  | Monitor 27\"    | 1450   | 20\n```\n\nEscreva uma query que retorne **apenas `nome` e `preco`**, ordenada do **maior para o menor preço**.",
-                                                         "task":  "TextValidation",
-                                                         "expectedText":  "SELECT nome, preco FROM produtos ORDER BY preco DESC"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l5",
-                                                         "title":  "Filtrando dados com WHERE",
-                                                         "type":  "theory",
-                                                         "content":  "## O poder do WHERE\n\nO `WHERE` define **quais dados** você quer. É o filtro da sua query.\n\n```sql\nSELECT * FROM pedidos WHERE valor \u003e 500;\nSELECT * FROM pedidos WHERE status = \u0027pago\u0027;\nSELECT * FROM pedidos WHERE valor BETWEEN 100 AND 1000;\nSELECT * FROM pedidos WHERE status IN (\u0027pago\u0027, \u0027enviado\u0027, \u0027entregue\u0027);\nSELECT * FROM clientes WHERE nome LIKE \u0027%Silva%\u0027;\nSELECT * FROM clientes WHERE telefone IS NULL;\n```\n\n\u003e ⚠️ **Atenção:** Em SQL, comparação de igualdade usa `=` (um sinal só), não `==`.\n\n## Combinando filtros\n\n```sql\nSELECT * FROM pedidos\nWHERE (status = \u0027pago\u0027 OR status = \u0027entregue\u0027)\n  AND valor BETWEEN 100 AND 5000\n  AND cancelado_em IS NULL;\n```\n\n\u003e ⚠️ **Cuidado:** o SQL prioriza `AND` sobre `OR`. Sempre use parênteses para garantir a lógica correta.\n\n| Operador | Uso |\n|---|---|\n| `=`, `\u003c\u003e`, `\u003e`, `\u003c` | Comparações básicas |\n| `BETWEEN x AND y` | Intervalo inclusivo |\n| `IN (a, b, c)` | Lista de valores |\n| `LIKE \u0027%texto%\u0027` | Busca em strings |\n| `IS NULL` | Verifica ausência de valor |"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l6",
-                                                         "title":  "Filtrando com WHERE — múltipla escolha",
-                                                         "type":  "practice",
-                                                         "content":  "## Teste seus filtros!\n\n```sql\nSELECT nome, valor, status\nFROM pedidos\nWHERE valor BETWEEN 200 AND 800\n  AND status IN (\u0027pago\u0027, \u0027enviado\u0027)\n  AND cancelado_em IS NULL;\n```\n\nQual afirmação descreve **corretamente** o resultado dessa query?",
-                                                         "task":  "MultipleChoice",
-                                                         "options":  [
-                                                                         "Retorna todos os pedidos pagos ou enviados, sem nenhum filtro de valor",
-                                                                         "Retorna pedidos com valor entre 200 e 800, com status \u0027pago\u0027 ou \u0027enviado\u0027, e que não foram cancelados",
-                                                                         "Retorna pedidos cancelados com valor acima de 800"
-                                                                     ],
-                                                         "expectedAnswer":  1
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l7",
-                                                         "title":  "Funções de Agregação — transformando linhas em métricas",
-                                                         "type":  "theory",
-                                                         "content":  "## As 5 funções essenciais\n\n```sql\n-- COUNT: contar registros\nSELECT COUNT(*) AS total_pedidos FROM pedidos;\nSELECT COUNT(telefone) AS com_telefone FROM clientes; -- ignora NULLs\n\n-- SUM: somar valores\nSELECT SUM(valor) AS receita_total FROM pedidos WHERE status = \u0027pago\u0027;\n\n-- AVG: calcular a média\nSELECT AVG(valor) AS ticket_medio FROM pedidos WHERE status = \u0027pago\u0027;\n\n-- MIN e MAX\nSELECT MIN(valor) AS menor, MAX(valor) AS maior FROM pedidos;\n```\n\n## Combinando múltiplas funções\n\n```sql\nSELECT\n  COUNT(*)     AS total_pedidos,\n  SUM(valor)   AS receita,\n  AVG(valor)   AS ticket_medio,\n  MIN(valor)   AS menor_pedido,\n  MAX(valor)   AS maior_pedido\nFROM pedidos\nWHERE status = \u0027pago\u0027;\n```\n\n\u003e ⚠️ **COUNT(*) vs COUNT(coluna):** `COUNT(*)` conta todas as linhas. `COUNT(coluna)` ignora NULLs. Sempre saiba qual você precisa.\n\n\u003e 💡 **Dica sênior:** Sempre combine agregações com `WHERE` de data. \"Qual a receita total?\" sem filtro de período é uma pergunta incompleta."
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l8",
-                                                         "title":  "Escrevendo uma query de agregação",
-                                                         "type":  "practice",
-                                                         "content":  "## Desafio: calcule as métricas!\n\nTabela `pedidos`:\n```sql\nid | cliente_id | valor   | status\n1  | 10         | 350.00  | pago\n2  | 11         | 120.00  | pago\n3  | 12         | 890.00  | pendente\n4  | 10         | 240.00  | pago\n```\n\nEscreva uma query que retorne o **total de pedidos pagos** (como `total_pedidos`) e a **soma dos valores pagos** (como `receita`), filtrando apenas `status = \u0027pago\u0027`.",
-                                                         "task":  "TextValidation",
-                                                         "expectedText":  "SELECT COUNT(*) AS total_pedidos, SUM(valor) AS receita FROM pedidos WHERE status = \u0027pago\u0027"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l9",
-                                                         "title":  "GROUP BY e HAVING — análise por segmento",
-                                                         "type":  "theory",
-                                                         "content":  "## Por que precisamos do GROUP BY?\n\nAs funções de agregação calculam valores para *toda a tabela*. Com `GROUP BY` você calcula **por segmento**.\n\n```sql\n-- Um número POR status\nSELECT status, COUNT(*) AS total\nFROM pedidos\nGROUP BY status;\n```\n\n\u003e 💡 **Regra de ouro:** Toda coluna no `SELECT` que não está em função de agregação **precisa** estar no `GROUP BY`.\n\n## HAVING — filtrando grupos\n\n```sql\n-- Categorias com receita acima de 50.000\nSELECT categoria, SUM(valor) AS receita\nFROM pedidos\nWHERE status \u003c\u003e \u0027cancelado\u0027\nGROUP BY categoria\nHAVING SUM(valor) \u003e 50000;\n```\n\n**Ordem de execução:** `FROM` → `WHERE` (filtra linhas) → `GROUP BY` → `HAVING` (filtra grupos) → `SELECT`\n\n\u003e ⚠️ **Erro clássico:** Usar alias do SELECT no HAVING não funciona. Use sempre a função completa: `HAVING SUM(valor) \u003e 10000`.\n\n| Cláusula | Quando filtrar |\n|---|---|\n| `WHERE` | Antes de agrupar (linhas) |\n| `HAVING` | Depois de agrupar (grupos) |"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l10",
-                                                         "title":  "GROUP BY na prática",
-                                                         "type":  "practice",
-                                                         "content":  "## Desafio: receita por categoria!\n\nEscreva uma query que:\n1. Filtre apenas pedidos `status = \u0027pago\u0027`\n2. Agrupe por `categoria`\n3. Calcule `SUM(valor)` como `receita`\n4. Mostre apenas categorias com `receita \u003e 10000`",
-                                                         "task":  "TextValidation",
-                                                         "expectedText":  "SELECT categoria, SUM(valor) AS receita FROM pedidos WHERE status = \u0027pago\u0027 GROUP BY categoria HAVING SUM(valor) \u003e 10000"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l11",
-                                                         "title":  "INNER JOIN e LEFT JOIN — conectando tabelas",
-                                                         "type":  "theory",
-                                                         "content":  "## Por que precisamos de JOINs?\n\nDados reais nunca vivem em uma única tabela. O `JOIN` conecta tabelas via chave primária/estrangeira.\n\n```sql\n-- INNER JOIN: apenas os que têm correspondência nas duas tabelas\nSELECT c.nome, p.valor, p.status\nFROM clientes c\nINNER JOIN pedidos p ON c.id = p.cliente_id;\n-- Clientes sem pedido NÃO aparecem\n\n-- LEFT JOIN: todos da esquerda, mesmo sem par\nSELECT c.nome, p.valor, p.status\nFROM clientes c\nLEFT JOIN pedidos p ON c.id = p.cliente_id;\n-- Clientes sem pedido aparecem com NULL\n\n-- Padrão poderoso: quem NÃO tem par\nSELECT c.nome\nFROM clientes c\nLEFT JOIN pedidos p ON c.id = p.cliente_id\nWHERE p.id IS NULL; -- clientes que nunca compraram\n```\n\n\u003e ⚠️ **Atenção:** `INNER JOIN` silenciosamente descarta quem não tem correspondência. Se precisar ver todos, use `LEFT JOIN`.\n\n| Situação | Use |\n|---|---|\n| Dados combinados de ambas | `INNER JOIN` |\n| Todos da tabela principal | `LEFT JOIN` |\n| Quem não tem correspondência | `LEFT JOIN ... WHERE direita IS NULL` |"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l12",
-                                                         "title":  "INNER vs LEFT JOIN — múltipla escolha",
-                                                         "type":  "practice",
-                                                         "content":  "## Teste seus JOINs!\n\n```sql\n-- clientes: Ana(1), Bruno(2), Carla(3)\n-- pedidos: Ana tem 2 pedidos, Bruno tem 1, Carla não tem\n```\n\nQual query retorna **exatamente 3 linhas** (incluindo Carla com NULL)?",
-                                                         "task":  "MultipleChoice",
-                                                         "options":  [
-                                                                         "SELECT c.nome, p.valor FROM clientes c INNER JOIN pedidos p ON c.id = p.cliente_id",
-                                                                         "SELECT c.nome, p.valor FROM clientes c LEFT JOIN pedidos p ON c.id = p.cliente_id",
-                                                                         "SELECT c.nome, p.valor FROM pedidos p INNER JOIN clientes c ON p.cliente_id = c.id"
-                                                                     ],
-                                                         "expectedAnswer":  1
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l13",
-                                                         "title":  "INSERT, UPDATE e DELETE — manipulando dados",
-                                                         "type":  "theory",
-                                                         "content":  "## DML — Linguagem de Manipulação de Dados\n\n```sql\n-- INSERT: adicionando dados\nINSERT INTO clientes (nome, email, criado_em)\nVALUES (\u0027Diana Costa\u0027, \u0027diana@email.com\u0027, \u00272024-04-01\u0027);\n\n-- UPDATE: SEMPRE use WHERE!\nUPDATE clientes\nSET email = \u0027diana.nova@email.com\u0027\nWHERE id = 4;\n\n-- DELETE: SEMPRE use WHERE!\nDELETE FROM pedidos\nWHERE status = \u0027cancelado\u0027\n  AND criado_em \u003c \u00272023-01-01\u0027;\n```\n\n\u003e ⚠️ **CRÍTICO:** `UPDATE` e `DELETE` sem `WHERE` afetam **todas as linhas**. Não há Ctrl+Z em banco de dados.\n\n## Protocolo de segurança antes de UPDATE/DELETE\n\n```sql\n-- Passo 1: confirme o alvo com SELECT\nSELECT * FROM clientes WHERE id = 4;\n\n-- Passo 2: execute a operação\nUPDATE clientes SET email = \u0027diana.nova@email.com\u0027 WHERE id = 4;\n```\n\n\u003e 💡 **Dica sênior:** Em produção, prefira *soft delete* — adicione uma coluna `deletado_em DATE` e atualize ela em vez de apagar a linha. Isso preserva histórico.\n\n| Comando | Risco |\n|---|---|\n| `INSERT INTO` | Baixo |\n| `UPDATE ... WHERE` | **Alto** sem WHERE |\n| `DELETE ... WHERE` | **Alto** sem WHERE |"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l14",
-                                                         "title":  "UPDATE com segurança — múltipla escolha",
-                                                         "type":  "practice",
-                                                         "content":  "## Situação real\n\n\u003e *\"O cliente de ID 7 mudou de e-mail. Atualize para `novo@email.com` na tabela `clientes`.\"*\n\nQual das queries está **correta E segura**?",
-                                                         "task":  "MultipleChoice",
-                                                         "options":  [
-                                                                         "UPDATE clientes SET email = \u0027novo@email.com\u0027",
-                                                                         "UPDATE clientes SET email = \u0027novo@email.com\u0027 WHERE id = 7",
-                                                                         "INSERT INTO clientes (email) VALUES (\u0027novo@email.com\u0027) WHERE id = 7"
-                                                                     ],
-                                                         "expectedAnswer":  1
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l15",
-                                                         "title":  "DISTINCT — eliminando duplicatas",
-                                                         "type":  "theory",
-                                                         "content":  "## O que é DISTINCT?\n\nO `DISTINCT` remove linhas duplicadas do resultado.\n\n```sql\n-- Sem DISTINCT: repete valores\nSELECT categoria FROM produtos;\n-- Eletrônicos, Eletrônicos, Móveis...\n\n-- Com DISTINCT: cada valor uma vez\nSELECT DISTINCT categoria FROM produtos;\n-- Eletrônicos, Móveis\n\n-- DISTINCT com múltiplas colunas (combinações únicas)\nSELECT DISTINCT categoria, status FROM pedidos;\n\n-- COUNT com DISTINCT\nSELECT COUNT(DISTINCT cliente_id) AS clientes_unicos FROM pedidos;\n```\n\n\u003e 💡 **Dica sênior:** Se você usa muito `DISTINCT`, pode ser sinal de um JOIN gerando duplicatas. Investigue o *por quê* antes de aplicar o `DISTINCT`.\n\n## DISTINCT vs GROUP BY\n\n```sql\n-- Equivalentes:\nSELECT DISTINCT categoria FROM produtos;\nSELECT categoria FROM produtos GROUP BY categoria;\n\n-- GROUP BY é mais poderoso (permite agregar):\nSELECT categoria, COUNT(*) AS total FROM produtos GROUP BY categoria;\n```"
-                                                     },
-                                                     {
-                                                         "id":  "sql_t1_l16",
-                                                         "title":  "Escrevendo um COUNT com DISTINCT",
-                                                         "type":  "practice",
-                                                         "content":  "## Desafio final do nível Júnior!\n\n\u003e *\"Quantos clientes diferentes fizeram pelo menos um pedido com status \u0027pago\u0027?\"*\n\n```sql\nid | cliente_id | valor   | status\n1  | 10         | 350.00  | pago\n2  | 10         | 120.00  | pago   ← mesmo cliente!\n3  | 11         | 890.00  | pago\n4  | 12         | 240.00  | pendente\n5  | 11         | 450.00  | pago   ← mesmo cliente!\n```\n\nA resposta esperada é **2 clientes únicos**. Escreva a query retornando coluna `clientes_unicos`.",
-                                                         "task":  "TextValidation",
-                                                         "expectedText":  "SELECT COUNT(DISTINCT cliente_id) AS clientes_unicos FROM pedidos WHERE status = \u0027pago\u0027"
-                                                     }
-                                                 ],
-                                       "Count":  16
-                                   }
-                   },
-                   {
-                       "id":  "sql_t2",
-                       "title":  "Trilha 2 â€” IntermediÃ¡rio",
-                       "description":  "JOINs, GROUP BY, HAVING, subqueries.",
-                       "lessons":  [
-                                       {
-                                           "id":  "sql_t2_l1",
-                                           "title":  "AgregaÃ§Ãµes Ocultas (GROUP BY)",
-                                           "type":  "theory",
-                                           "content":  "Toda vez que vocÃª quiser \u0027somar\u0027 o dinheiro por estado, vocÃª precisa agrupar.\n\n`SELECT estado, SUM(vendas) as total FROM dados GROUP BY estado;`\n\nNUNCA coloque no GROUP BY a mesma mÃ©trica agregada. Tudo que nÃ£o for uma funÃ§Ã£o matemÃ¡tica (SUM, AVG, COUNT, MIN, MAX) tem que ir pro GROUP BY."
-                                       },
-                                       {
-                                           "id":  "sql_t2_l2",
-                                           "title":  "Relacionando tabelas (INNER vs LEFT)",
-                                           "type":  "theory",
-                                           "content":  "Tem uma regra de ouro em Modelagem Dimensional vs SQL Corporativo: na dÃºvida para trazer mÃ©tricas de vendas (Fato) e enriquecer com Produto (DimensÃ£o), use `LEFT JOIN` partindo da tabela mais importante (a Fato).\nSe vocÃª usar `INNER JOIN`, e um produto tiver sido deletado do catÃ¡logo, a venda vai desaparecer do seu painel e a receita vai deixar um rombo."
-                                       }
-                                   ]
-                   },
-                   {
-                       "id":  "sql_t3",
-                       "title":  "Trilha 3 â€” AvanÃ§ado para Consultores",
-                       "description":  "Window Functions, CTEs, CASE WHEN, performance.",
-                       "lessons":  [
-                                       {
-                                           "id":  "sql_t3_l1",
-                                           "title":  "CTEs e Limpeza de LÃ³gica",
-                                           "type":  "theory",
-                                           "content":  "CTE (Common Table Expression):\nÃ‰ usar a claÃºsula `WITH sub_query AS (SELECT * FROM...)` no inÃ­cio do cÃ³digo.\nDiferente de Subqueries normais (que ficam engessadas no FROM e vocÃª perde rastreabilidade), a CTE funciona como uma \u0027variÃ¡vel\u0027 no topo do seu SQL. VocÃª empilha vÃ¡rias CTEs para limpar dados, tratar strings, e no final sÃ³ faz um SELECT juntando todas.\nEm bancos como Snowflake ou BigQuery, CTEs bem estruturadas sÃ£o cacheadas e otimizam sua fatura de dÃ³lares."
-                                       }
-                                   ]
-                   }
-               ]
+{
+  "id": "2",
+  "title": "SQL",
+  "description": "Banco de Dados Interativo com sql.js",
+  "trails": [
+    {
+      "id": "sql_t1",
+      "title": "Trilha 1 — Fundamentos",
+      "description": "O que é SQL, SELECT, WHERE, agregações, GROUP BY, JOINs, INSERT/UPDATE/DELETE, DISTINCT.",
+      "lessons": [
+        {
+          "id": "sql_t1_l1",
+          "title": "O que é SQL e o Banco de Dados Relacional",
+          "type": "theory",
+          "content": "## O que é SQL?\n\n**SQL** (*Structured Query Language*) é a linguagem universal para se comunicar com bancos de dados relacionais. Pense nela como o idioma que você usa para *fazer perguntas* e *dar instruções* a um sistema que guarda dados.\n\nCriado nos anos 70 pela IBM e padronizado pela ISO, o SQL ainda é a habilidade mais pedida em vagas de dados no mundo inteiro.\n\n---\n\n## Como os dados são organizados?\n\nTodo banco de dados relacional organiza os dados em **tabelas**:\n\n| Conceito | O que é | Analogia |\n|---|---|---|\n| **Tabela** | Conjunto de dados sobre um assunto | A aba de uma planilha |\n| **Coluna** | Um atributo/característica | O cabeçalho da planilha |\n| **Linha** | Um registro individual | Uma linha da planilha |\n| **Chave Primária (PK)** | Identificador único de cada linha | CPF de uma pessoa |\n\n### Exemplo real: tabela `clientes`\n\n```sql\nid  | nome          | email                | criado_em\n----|---------------|----------------------|------------\n1   | Ana Lima      | ana@email.com        | 2024-01-10\n2   | Bruno Souza   | bruno@email.com      | 2024-02-05\n3   | Carla Mendes  | carla@email.com      | 2024-03-18\n```\n\n---\n\n## Por que \"relacional\"?\n\nAs tabelas se **relacionam** entre si via **chaves estrangeiras (FK)**.\n\n> 💡 **Dica sênior:** A vantagem do modelo relacional é evitar repetição de dados. Isso se chama *normalização*.\n\n---\n\n## Os principais tipos de dados\n\n```sql\nCREATE TABLE clientes (\n  id         INT,\n  nome       VARCHAR(100),\n  saldo      DECIMAL(10,2),\n  ativo      BOOLEAN,\n  criado_em  DATE\n);\n```\n\n> ⚠️ **Atenção:** Guardar um número como `VARCHAR` é um erro clássico. Você consegue salvar, mas não faz `SUM()` ou comparações matemáticas. Sempre escolha o tipo correto."
+        },
+        {
+          "id": "sql_t1_l2",
+          "title": "Fixando conceitos: Múltipla Escolha",
+          "type": "practice",
+          "content": "## Hora de praticar!\n\n```sql\nid | cliente_id | valor  | status\n---|------------|--------|--------\n1  | 42         | 350.00 | pago\n2  | 42         | 120.00 | pago\n3  | 99         | 890.00 | pendente\n```\n\nQual coluna é a **chave estrangeira** que conecta esta tabela à tabela `clientes`?",
+          "task": "MultipleChoice",
+          "options": [
+            "id — porque é o identificador único dos pedidos",
+            "cliente_id — porque referencia o id da tabela clientes",
+            "status — porque classifica cada pedido"
+          ],
+          "expectedAnswer": 1
+        },
+        {
+          "id": "sql_t1_l3",
+          "title": "Seu primeiro SELECT — buscando dados",
+          "type": "theory",
+          "content": "## O comando SELECT\n\nO `SELECT` é o comando mais importante do SQL. Serve para **buscar dados** de uma tabela.\n\n### Anatomia básica\n\n```sql\nSELECT coluna1, coluna2   -- O QUE você quer ver\nFROM nome_da_tabela       -- DE ONDE vêm os dados\nWHERE condicao            -- FILTRO (opcional)\nORDER BY coluna           -- ORDEM (opcional)\nLIMIT numero;             -- LIMITE de linhas (opcional)\n```\n\n> 💡 **Dica sênior:** O banco processa internamente: `FROM` → `WHERE` → `SELECT` → `ORDER BY` → `LIMIT`. Entender isso evita erros de lógica.\n\n## Exemplos práticos\n\n```sql\n-- Colunas específicas com alias\nSELECT nome AS cliente, email AS contato FROM clientes;\n\n-- Ordenando do mais recente\nSELECT nome, criado_em FROM clientes ORDER BY criado_em DESC;\n\n-- Limitando resultados (sempre use ao explorar tabelas novas!)\nSELECT * FROM clientes ORDER BY criado_em DESC LIMIT 5;\n```\n\n> ⚠️ **Atenção:** Sempre use `LIMIT` ao explorar tabelas desconhecidas. Algumas têm *milhões* de linhas."
+        },
+        {
+          "id": "sql_t1_l4",
+          "title": "Escrevendo seu primeiro SELECT",
+          "type": "practice",
+          "content": "## Desafio: busque os dados certos!\n\nVocê tem a tabela `produtos`:\n\n```sql\nid | nome           | preco  | estoque\n---|----------------|--------|--------\n1  | Notebook Pro   | 3200   | 15\n2  | Mouse Gamer    | 180    | 42\n3  | Cadeira Ergo   | 890    | 8\n4  | Monitor 27     | 1450   | 20\n```\n\nEscreva uma query que retorne **apenas `nome` e `preco`**, ordenada do **maior para o menor preço**.\n\n> 💡 Lembre-se: para ordenar do maior para o menor, use `DESC`.",
+          "task": "TextValidation",
+          "expectedText": "SELECT nome, preco FROM produtos ORDER BY preco DESC"
+        },
+        {
+          "id": "sql_t1_l5",
+          "title": "Filtrando dados com WHERE",
+          "type": "theory",
+          "content": "## O poder do WHERE\n\nO `WHERE` define **quais dados** você quer — é o filtro da sua query.\n\n```sql\nSELECT * FROM pedidos WHERE valor > 500;\nSELECT * FROM pedidos WHERE status = 'pago';\nSELECT * FROM pedidos WHERE valor BETWEEN 100 AND 1000;\nSELECT * FROM pedidos WHERE status IN ('pago', 'enviado', 'entregue');\nSELECT * FROM clientes WHERE nome LIKE '%Silva%';\nSELECT * FROM clientes WHERE telefone IS NULL;\n```\n\n> ⚠️ Em SQL, comparação de igualdade usa `=` (um sinal só), não `==`.\n\n## Combinando filtros\n\n```sql\nSELECT * FROM pedidos\nWHERE (status = 'pago' OR status = 'entregue')\n  AND valor BETWEEN 100 AND 5000\n  AND cancelado_em IS NULL;\n```\n\n> ⚠️ O SQL prioriza `AND` sobre `OR`. Sempre use parênteses para garantir a lógica correta.\n\n| Operador | Uso |\n|---|---|\n| `=`, `<>`, `>`, `<` | Comparações básicas |\n| `BETWEEN x AND y` | Intervalo inclusivo |\n| `IN (a, b, c)` | Lista de valores |\n| `LIKE '%texto%'` | Busca em strings |\n| `IS NULL` | Verifica ausência de valor |"
+        },
+        {
+          "id": "sql_t1_l6",
+          "title": "Filtrando com WHERE — múltipla escolha",
+          "type": "practice",
+          "content": "## Teste seus filtros!\n\n```sql\nSELECT nome, valor, status\nFROM pedidos\nWHERE valor BETWEEN 200 AND 800\n  AND status IN ('pago', 'enviado')\n  AND cancelado_em IS NULL;\n```\n\nQual afirmação descreve **corretamente** o resultado dessa query?",
+          "task": "MultipleChoice",
+          "options": [
+            "Retorna todos os pedidos pagos ou enviados, sem nenhum filtro de valor",
+            "Retorna pedidos com valor entre 200 e 800, com status pago ou enviado, e que não foram cancelados",
+            "Retorna pedidos cancelados com valor acima de 800"
+          ],
+          "expectedAnswer": 1
+        },
+        {
+          "id": "sql_t1_l7",
+          "title": "Funções de Agregação — transformando linhas em métricas",
+          "type": "theory",
+          "content": "## As 5 funções essenciais\n\n```sql\n-- COUNT: contar registros\nSELECT COUNT(*) AS total_pedidos FROM pedidos;\nSELECT COUNT(telefone) AS com_telefone FROM clientes; -- ignora NULLs\n\n-- SUM: somar valores\nSELECT SUM(valor) AS receita_total FROM pedidos WHERE status = 'pago';\n\n-- AVG: calcular a média\nSELECT AVG(valor) AS ticket_medio FROM pedidos;\n\n-- MIN e MAX\nSELECT MIN(valor) AS menor, MAX(valor) AS maior FROM pedidos;\n```\n\n## Combinando múltiplas funções\n\n```sql\nSELECT\n  COUNT(*) AS total_pedidos,\n  SUM(valor) AS receita,\n  AVG(valor) AS ticket_medio,\n  MIN(valor) AS menor_pedido,\n  MAX(valor) AS maior_pedido\nFROM pedidos\nWHERE status = 'pago';\n```\n\n> ⚠️ `COUNT(*)` conta todas as linhas. `COUNT(coluna)` ignora NULLs. Sempre saiba qual você precisa.\n\n> 💡 **Dica sênior:** Sempre combine agregações com filtro de período. \"Qual a receita total?\" sem filtro de data é uma pergunta incompleta."
+        },
+        {
+          "id": "sql_t1_l8",
+          "title": "Escrevendo uma query de agregação",
+          "type": "practice",
+          "content": "## Desafio: calcule as métricas!\n\nEscreva uma query que retorne o **total de pedidos pagos** (como `total_pedidos`) e a **soma dos valores pagos** (como `receita`), filtrando apenas `status = 'pago'`.\n\n> 💡 Use `AS` para dar os nomes corretos às colunas.",
+          "task": "TextValidation",
+          "expectedText": "SELECT COUNT(*) AS total_pedidos, SUM(valor) AS receita FROM pedidos WHERE status = 'pago'"
+        },
+        {
+          "id": "sql_t1_l9",
+          "title": "GROUP BY e HAVING — análise por segmento",
+          "type": "theory",
+          "content": "## Por que precisamos do GROUP BY?\n\nCom `GROUP BY` você calcula agregações **por segmento**, não para toda a tabela.\n\n```sql\n-- Um número POR status\nSELECT status, COUNT(*) AS total\nFROM pedidos\nGROUP BY status;\n```\n\n> 💡 **Regra de ouro:** Toda coluna no `SELECT` sem função de agregação **precisa** estar no `GROUP BY`.\n\n## HAVING — filtrando grupos\n\n```sql\nSELECT categoria, SUM(valor) AS receita\nFROM pedidos\nWHERE status <> 'cancelado'\nGROUP BY categoria\nHAVING SUM(valor) > 50000;\n```\n\n**Ordem de execução:** `FROM` → `WHERE` (linhas) → `GROUP BY` → `HAVING` (grupos) → `SELECT`\n\n> ⚠️ Usar alias do SELECT no HAVING não funciona. Use sempre a função completa: `HAVING SUM(valor) > 10000`.\n\n| Cláusula | Quando filtrar |\n|---|---|\n| `WHERE` | Antes de agrupar (filtra linhas) |\n| `HAVING` | Depois de agrupar (filtra grupos) |"
+        },
+        {
+          "id": "sql_t1_l10",
+          "title": "GROUP BY na prática",
+          "type": "practice",
+          "content": "## Desafio: receita por categoria!\n\nEscreva uma query que:\n1. Filtre apenas pedidos `status = 'pago'`\n2. Agrupe por `categoria`\n3. Calcule `SUM(valor)` como `receita`\n4. Mostre apenas categorias com `receita > 10000`\n\n> 💡 Lembre-se: `WHERE` antes do `GROUP BY`, `HAVING` depois.",
+          "task": "TextValidation",
+          "expectedText": "SELECT categoria, SUM(valor) AS receita FROM pedidos WHERE status = 'pago' GROUP BY categoria HAVING SUM(valor) > 10000"
+        },
+        {
+          "id": "sql_t1_l11",
+          "title": "INNER JOIN e LEFT JOIN — conectando tabelas",
+          "type": "theory",
+          "content": "## Por que precisamos de JOINs?\n\nDados reais nunca vivem em uma única tabela. O `JOIN` conecta tabelas via chave primária/estrangeira.\n\n```sql\n-- INNER JOIN: apenas os que têm correspondência nas duas tabelas\nSELECT c.nome, p.valor, p.status\nFROM clientes c\nINNER JOIN pedidos p ON c.id = p.cliente_id;\n-- Clientes sem pedido NAO aparecem\n\n-- LEFT JOIN: todos da esquerda, mesmo sem par\nSELECT c.nome, p.valor, p.status\nFROM clientes c\nLEFT JOIN pedidos p ON c.id = p.cliente_id;\n-- Clientes sem pedido aparecem com NULL\n\n-- Padrao poderoso: quem NAO tem par\nSELECT c.nome\nFROM clientes c\nLEFT JOIN pedidos p ON c.id = p.cliente_id\nWHERE p.id IS NULL;\n```\n\n> ⚠️ `INNER JOIN` silenciosamente descarta quem não tem correspondência. Se precisar ver todos, use `LEFT JOIN`.\n\n| Situação | Use |\n|---|---|\n| Dados combinados de ambas | `INNER JOIN` |\n| Todos da tabela principal | `LEFT JOIN` |\n| Quem não tem correspondência | `LEFT JOIN ... WHERE IS NULL` |"
+        },
+        {
+          "id": "sql_t1_l12",
+          "title": "INNER vs LEFT JOIN — múltipla escolha",
+          "type": "practice",
+          "content": "## Teste seus JOINs!\n\nClientes: Ana(id=1), Bruno(id=2), Carla(id=3).\nAna tem 2 pedidos, Bruno tem 1, Carla não tem nenhum.\n\nQual query retorna **exatamente 3 linhas** (incluindo Carla com NULL)?",
+          "task": "MultipleChoice",
+          "options": [
+            "SELECT c.nome, p.valor FROM clientes c INNER JOIN pedidos p ON c.id = p.cliente_id",
+            "SELECT c.nome, p.valor FROM clientes c LEFT JOIN pedidos p ON c.id = p.cliente_id",
+            "SELECT c.nome, p.valor FROM pedidos p INNER JOIN clientes c ON p.cliente_id = c.id"
+          ],
+          "expectedAnswer": 1
+        },
+        {
+          "id": "sql_t1_l13",
+          "title": "INSERT, UPDATE e DELETE — manipulando dados",
+          "type": "theory",
+          "content": "## DML — Linguagem de Manipulação de Dados\n\n```sql\n-- INSERT: adicionando dados\nINSERT INTO clientes (nome, email, criado_em)\nVALUES ('Diana Costa', 'diana@email.com', '2024-04-01');\n\n-- UPDATE: SEMPRE use WHERE!\nUPDATE clientes\nSET email = 'diana.nova@email.com'\nWHERE id = 4;\n\n-- DELETE: SEMPRE use WHERE!\nDELETE FROM pedidos\nWHERE status = 'cancelado'\n  AND criado_em < '2023-01-01';\n```\n\n> ⚠️ **CRÍTICO:** `UPDATE` e `DELETE` sem `WHERE` afetam **TODAS** as linhas. Não há desfazer em banco de dados.\n\n## Protocolo de segurança antes de UPDATE/DELETE\n\n```sql\n-- Passo 1: confirme o alvo com SELECT\nSELECT * FROM clientes WHERE id = 4;\n\n-- Passo 2: execute a operacao\nUPDATE clientes SET email = 'diana.nova@email.com' WHERE id = 4;\n```\n\n> 💡 **Dica sênior:** Em produção, prefira *soft delete* — adicione coluna `deletado_em DATE` e atualize ela em vez de apagar a linha. Isso preserva histórico.\n\n| Comando | Risco |\n|---|---|\n| `INSERT INTO` | Baixo |\n| `UPDATE ... WHERE` | **Alto** sem WHERE |\n| `DELETE ... WHERE` | **Alto** sem WHERE |"
+        },
+        {
+          "id": "sql_t1_l14",
+          "title": "UPDATE com segurança — múltipla escolha",
+          "type": "practice",
+          "content": "## Situação real\n\n> *\"O cliente de ID 7 mudou de e-mail. Atualize para `novo@email.com` na tabela `clientes`.\"*\n\nQual das queries está **correta E segura**?",
+          "task": "MultipleChoice",
+          "options": [
+            "UPDATE clientes SET email = 'novo@email.com'",
+            "UPDATE clientes SET email = 'novo@email.com' WHERE id = 7",
+            "INSERT INTO clientes (email) VALUES ('novo@email.com') WHERE id = 7"
+          ],
+          "expectedAnswer": 1
+        },
+        {
+          "id": "sql_t1_l15",
+          "title": "DISTINCT — eliminando duplicatas",
+          "type": "theory",
+          "content": "## O que é DISTINCT?\n\nO `DISTINCT` remove linhas duplicadas do resultado.\n\n```sql\n-- Valores únicos de uma coluna\nSELECT DISTINCT categoria FROM produtos;\n\n-- Combinações únicas de múltiplas colunas\nSELECT DISTINCT categoria, status FROM pedidos;\n\n-- COUNT com DISTINCT\nSELECT COUNT(DISTINCT cliente_id) AS clientes_unicos FROM pedidos;\n```\n\n> 💡 **Dica sênior:** Se você usa muito `DISTINCT`, pode ser sinal de um JOIN gerando duplicatas. Investigue o *por quê* antes de aplicar.\n\n## DISTINCT vs GROUP BY\n\n```sql\n-- Equivalentes:\nSELECT DISTINCT categoria FROM produtos;\nSELECT categoria FROM produtos GROUP BY categoria;\n\n-- GROUP BY é mais poderoso (permite agregar):\nSELECT categoria, COUNT(*) AS total FROM produtos GROUP BY categoria;\n```"
+        },
+        {
+          "id": "sql_t1_l16",
+          "title": "Escrevendo um COUNT com DISTINCT",
+          "type": "practice",
+          "content": "## Desafio final do nível Júnior!\n\n> *\"Quantos clientes diferentes fizeram pelo menos um pedido com status 'pago'?\"*\n\n```sql\nid | cliente_id | status\n1  | 10         | pago\n2  | 10         | pago   -- mesmo cliente!\n3  | 11         | pago\n4  | 12         | pendente\n5  | 11         | pago   -- mesmo cliente!\n```\n\nA resposta esperada é **2 clientes únicos**. Escreva a query com coluna `clientes_unicos`.",
+          "task": "TextValidation",
+          "expectedText": "SELECT COUNT(DISTINCT cliente_id) AS clientes_unicos FROM pedidos WHERE status = 'pago'"
+        }
+      ]
+    },
+    {
+      "id": "sql_t2",
+      "title": "Trilha 2 — Intermediário",
+      "description": "JOINs, GROUP BY, HAVING, subqueries.",
+      "lessons": [
+        {
+          "id": "sql_t2_l1",
+          "title": "Agregações Ocultas (GROUP BY)",
+          "type": "theory",
+          "content": "Toda vez que você quiser 'somar' o dinheiro por estado, você precisa agrupar.\n\n`SELECT estado, SUM(vendas) as total FROM dados GROUP BY estado;`\n\nNUNCA coloque no GROUP BY a mesma métrica agregada. Tudo que não for uma função matemática (SUM, AVG, COUNT, MIN, MAX) tem que ir pro GROUP BY."
+        },
+        {
+          "id": "sql_t2_l2",
+          "title": "Relacionando tabelas (INNER vs LEFT)",
+          "type": "theory",
+          "content": "Tem uma regra de ouro em Modelagem Dimensional vs SQL Corporativo: na dúvida para trazer métricas de vendas (Fato) e enriquecer com Produto (Dimensão), use `LEFT JOIN` partindo da tabela mais importante (a Fato).\nSe você usar `INNER JOIN`, e um produto tiver sido deletado do catálogo, a venda vai desaparecer do seu painel e a receita vai deixar um rombo."
+        }
+      ]
+    },
+    {
+      "id": "sql_t3",
+      "title": "Trilha 3 — Avançado para Consultores",
+      "description": "Window Functions, CTEs, CASE WHEN, performance.",
+      "lessons": [
+        {
+          "id": "sql_t3_l1",
+          "title": "CTEs e Limpeza de Lógica",
+          "type": "theory",
+          "content": "CTE (Common Table Expression):\nÉ usar a claúsula `WITH sub_query AS (SELECT * FROM...)` no início do código.\nDiferente de Subqueries normais (que ficam engessadas no FROM e você perde rastreabilidade), a CTE funciona como uma 'variável' no topo do seu SQL. Você empilha várias CTEs para limpar dados, tratar strings, e no final só faz um SELECT juntando todas.\nEm bancos como Snowflake ou BigQuery, CTEs bem estruturadas são cacheadas e otimizam sua fatura de dólares."
+        }
+      ]
+    }
+  ]
 }
