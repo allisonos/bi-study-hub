@@ -31,6 +31,7 @@ import Leaderboard from './components/Leaderboard.jsx';
 import Notification from './components/Notification.jsx';
 import LevelUpAnimation from './components/LevelUpAnimation.jsx';
 import OnboardingModal from './components/OnboardingModal.jsx';
+import RoadmapView from './components/RoadmapView.jsx';
 
 export default function App() {
   const [state, setState] = useState(() => {
@@ -126,6 +127,16 @@ export default function App() {
     processNotifications(notifs);
   }, [state, processNotifications]);
 
+  const handleCompleteRoadmapTopic = useCallback((level, topicId) => {
+    setState(prev => ({
+      ...prev,
+      roadmapProgress: {
+        ...prev.roadmapProgress,
+        [level]: { ...(prev.roadmapProgress?.[level] || {}), [topicId]: true },
+      },
+    }));
+  }, []);
+
   const renderView = () => {
     // Track views — show courses
     if (view.startsWith('track-')) {
@@ -175,6 +186,7 @@ export default function App() {
     switch (view) {
       case 'badges': return <BadgeGrid state={state} onNavigate={handleNavigate} />;
       case 'leaderboard': return <Leaderboard state={state} onNavigate={handleNavigate} />;
+      case 'roadmap': return <RoadmapView state={state} onNavigate={handleNavigate} onCompleteRoadmapTopic={handleCompleteRoadmapTopic} />;
       case 'dashboard':
       default: return <Dashboard state={state} onNavigate={handleNavigate} />;
     }

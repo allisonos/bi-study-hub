@@ -1,0 +1,297 @@
+/* ═══════════════════════════════════════════════════════════════
+   BI Study Hub — Roadmap Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.roadmap-view { max-width: 860px; margin: 0 auto; }
+
+/* ── Hero ── */
+.roadmap-hero {
+  margin-bottom: var(--space-xl);
+}
+.roadmap-hero h2 { font-size: 1.6rem; margin-bottom: 6px; }
+.roadmap-hero p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ── Level Selector ── */
+.roadmap-level-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.roadmap-level-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--bg-card);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  transition: all var(--transition-med);
+  text-align: left;
+  color: var(--text-primary);
+}
+.roadmap-level-btn:hover {
+  border-color: var(--level-color);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--level-color) 20%, transparent);
+}
+.roadmap-level-btn.active {
+  border-color: var(--level-color);
+  background: color-mix(in srgb, var(--level-color) 10%, var(--bg-card));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--level-color) 25%, transparent);
+}
+
+.roadmap-level-icon { font-size: 1.6rem; flex-shrink: 0; }
+.roadmap-level-info { flex: 1; }
+.roadmap-level-name { display: block; font-size: 0.95rem; font-weight: 700; }
+.roadmap-level-years { display: block; font-size: 0.72rem; color: var(--text-dim); }
+.roadmap-level-count {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--level-color);
+  background: color-mix(in srgb, var(--level-color) 12%, transparent);
+  padding: 2px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* ── Progress ── */
+.roadmap-progress-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+.roadmap-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+.roadmap-progress-bar {
+  height: 10px;
+  background: var(--bg-tertiary);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.roadmap-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+
+/* ── Topics ── */
+.roadmap-topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.roadmap-topic-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+.roadmap-topic-number {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 14px;
+}
+.roadmap-topic-card {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+.roadmap-topic-card.completed {
+  border-color: var(--border-accent);
+  background: color-mix(in srgb, var(--accent-primary) 4%, var(--bg-card));
+}
+.roadmap-topic-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  user-select: none;
+}
+.roadmap-topic-header:hover { background: var(--bg-hover); }
+.roadmap-topic-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.roadmap-topic-status {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.roadmap-topic-title { font-size: 0.9rem; font-weight: 600; }
+.roadmap-topic-meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.roadmap-topic-priority { font-weight: 600; }
+.roadmap-topic-chevron {
+  font-size: 1.3rem;
+  color: var(--text-dim);
+  transition: transform var(--transition-fast);
+  line-height: 1;
+}
+.roadmap-topic-chevron.open { transform: rotate(90deg); }
+
+.roadmap-topic-body {
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
+  border-top: 1px solid var(--border-subtle);
+}
+.roadmap-subtopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+.roadmap-subtopic-tag {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  color: var(--text-muted);
+}
+
+/* ── Quiz Modal ── */
+.roadmap-quiz-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-lg);
+  backdrop-filter: blur(4px);
+}
+.roadmap-quiz-modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  max-width: 560px;
+  width: 100%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.roadmap-quiz-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: var(--bg-tertiary);
+  border: none;
+  color: var(--text-muted);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+.roadmap-quiz-close:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.roadmap-quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+.roadmap-quiz-topic { font-size: 0.85rem; font-weight: 700; color: var(--accent-primary); }
+.roadmap-quiz-progress { font-size: 0.8rem; color: var(--text-dim); }
+
+.roadmap-quiz-bar {
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: var(--space-xl);
+}
+.roadmap-quiz-bar > div {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 100px;
+  transition: width 0.3s ease;
+}
+
+.roadmap-quiz-question {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: var(--space-lg);
+}
+.roadmap-quiz-options { display: flex; flex-direction: column; gap: var(--space-sm); }
+.roadmap-quiz-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: left;
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 12px var(--space-md);
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+}
+.roadmap-quiz-option:hover { border-color: var(--border-accent); background: var(--bg-hover); }
+.roadmap-quiz-option.correct { border-color: #10B981; background: rgba(16,185,129,0.12); }
+.roadmap-quiz-option.wrong { border-color: #EF4444; background: rgba(239,68,68,0.12); }
+
+.roadmap-quiz-letter {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Quiz Result ── */
+.roadmap-quiz-result { text-align: center; padding: var(--space-lg) 0; }
+.roadmap-quiz-result-icon { font-size: 3.5rem; margin-bottom: var(--space-md); }
+.roadmap-quiz-result h3 { font-size: 1.3rem; margin-bottom: var(--space-sm); }
+.roadmap-quiz-score {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent-primary), var(--cta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-sm);
+}
+.roadmap-quiz-result-msg { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .roadmap-level-selector { grid-template-columns: 1fr; }
+  .roadmap-quiz-modal { padding: var(--space-lg); }
+}

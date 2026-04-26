@@ -84,6 +84,7 @@ export default function Sidebar({ currentView, onNavigate, streak }) {
         {/* Plataforma */}
         <div className="sidebar-section-label" style={{ marginTop: '16px' }}>Plataforma</div>
         {[
+          { id: 'roadmap', icon: 'map', label: 'Roadmap' },
           { id: 'leaderboard', icon: 'trophy', label: 'Ranking' },
           { id: 'badges', icon: 'award', label: 'Conquistas' },
         ].map(item => (

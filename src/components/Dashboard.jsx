@@ -1,11 +1,8 @@
-// ═══════════════════════════════════════════════════════════════
-//  Pague Menos Academy — Dashboard
-// ═══════════════════════════════════════════════════════════════
-
 import { tracks, getAllCourses } from '../data/tracks.js';
 import { badges } from '../data/badges.js';
 import { getLevelByXP, getLevelProgress, getNextLevel } from '../data/levels.js';
 import { getCourseProgress, getTrackProgress } from '../utils/xpSystem.js';
+import { getDailyMotivational } from '../data/motivational.js';
 import GamificationBar from './GamificationBar.jsx';
 import Icon from './Icon.jsx';
 import '../styles/dashboard.css';
@@ -22,16 +19,16 @@ export default function Dashboard({ state, onNavigate }) {
   const level = getLevelByXP(state.xp);
   const nextLevel = getNextLevel(state.xp);
   const levelProgress = getLevelProgress(state.xp);
-
   const completedLessons = state.completedLessons.length;
   const totalBadges = state.earnedBadges.length;
-
   const userEntry = { name: state.user.name || 'Você', xp: state.xp, isYou: true };
   const allEntries = [...fakeLeaderboard, userEntry].sort((a, b) => b.xp - a.xp).slice(0, 6);
 
-  // Get Trilha de Dados
   const dadosTrack = tracks.find(t => t.id === 'dados');
-  const dadosProgress = dadosTrack ? getTrackProgress(state, dadosTrack) : 0;
+  const comercialTrack = tracks.find(t => t.id === 'comercial');
+
+  // Motivational card
+  const motivational = getDailyMotivational(state.user.musicGenre || 'any');
 
   return (
     <div className="dashboard fade-in">
@@ -41,14 +38,24 @@ export default function Dashboard({ state, onNavigate }) {
           <h2>Olá, {state.user.name || 'Colaborador'}</h2>
           <p style={{ color: 'var(--text-muted)', marginTop: '4px', fontSize: '0.9rem' }}>
             {completedLessons === 0
-              ? 'Bem-vindo à Pague Menos Academy. Escolha um curso para começar.'
-              : `${completedLessons} aulas concluídas. Continue progredindo!`
-            }
+              ? 'Bem-vindo ao BI Study Hub. Escolha um curso para começar.'
+              : `${completedLessons} aulas concluídas. Continue progredindo!`}
           </p>
         </div>
         <div className="dash-level-badge" style={{ background: level.gradient }}>
           <Icon name={level.icon} size={16} color="#fff" />
           <span>{level.name}</span>
+        </div>
+      </div>
+
+      {/* Motivational Card */}
+      <div className="dash-motivational-card">
+        <div className="dash-motivational-icon">
+          {motivational.type === 'music' ? '🎵' : '💬'}
+        </div>
+        <div className="dash-motivational-content">
+          <p className="dash-motivational-text">"{motivational.text}"</p>
+          <span className="dash-motivational-source">— {motivational.source}</span>
         </div>
       </div>
 
@@ -82,7 +89,6 @@ export default function Dashboard({ state, onNavigate }) {
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: 'var(--space-lg)' }}>
             Domine Power BI, Python e SQL para se destacar em análise de dados.
           </p>
-
           <div className="dash-courses-grid stagger-children">
             {dadosTrack && dadosTrack.courses.map(course => {
               const progress = getCourseProgress(state, course);
@@ -116,19 +122,40 @@ export default function Dashboard({ state, onNavigate }) {
           </div>
 
           {/* Trilha Comercial */}
-          <div className="dash-coming-soon" style={{ marginTop: 'var(--space-xl)' }}>
-            <div className="coming-soon-card">
-              <div className="coming-soon-header">
-                <div className="coming-soon-icon">
-                  <Icon name="briefcase" size={24} color="#FF2342" />
+          <h3 style={{ marginTop: 'var(--space-xl)' }}>Trilha Comercial</h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: 'var(--space-lg)' }}>
+            Desenvolva habilidades comerciais e estratégicas para o mercado.
+          </p>
+          <div className="dash-courses-grid stagger-children">
+            {comercialTrack && comercialTrack.courses.map(course => {
+              const progress = getCourseProgress(state, course);
+              return (
+                <div
+                  key={course.id}
+                  className="course-card"
+                  onClick={() => onNavigate(`course-${course.id}`)}
+                  style={{ '--course-color': course.color }}
+                >
+                  <div className="course-card-header">
+                    <div className="course-card-icon" style={{ background: course.gradient }}>
+                      <Icon name={course.icon} size={22} color="#fff" />
+                    </div>
+                    <div>
+                      <div className="course-card-title">{course.name}</div>
+                      <div className="course-card-modules">{course.modules.length} módulos</div>
+                    </div>
+                  </div>
+                  <div className="course-card-desc">{course.description}</div>
+                  <div className="progress-bar" style={{ marginBottom: '8px' }}>
+                    <div className="progress-bar-fill" style={{ width: `${progress}%`, background: course.gradient }}></div>
+                  </div>
+                  <div className="course-card-footer">
+                    <span style={{ color: course.color, fontWeight: 700 }}>{progress}%</span>
+                    <span><Icon name="arrow-right" size={14} /></span>
+                  </div>
                 </div>
-                <div>
-                  <h3>Trilha Comercial</h3>
-                  <p>Aprimore suas habilidades comerciais e de negociação.</p>
-                </div>
-              </div>
-              <span className="tag tag-coming-soon">Em breve</span>
-            </div>
+              );
+            })}
           </div>
         </div>
 
@@ -144,8 +171,7 @@ export default function Dashboard({ state, onNavigate }) {
                   <div key={badge.id} className={`dash-badge ${earned ? 'earned' : 'locked'}`} title={earned ? badge.name : '???'}>
                     {earned
                       ? <Icon name={badge.icon} size={18} color="var(--accent-primary)" />
-                      : <Icon name="lock" size={14} color="var(--text-dim)" />
-                    }
+                      : <Icon name="lock" size={14} color="var(--text-dim)" />}
                   </div>
                 );
               })}

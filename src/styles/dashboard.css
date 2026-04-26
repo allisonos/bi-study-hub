@@ -24,6 +24,50 @@
   color: #fff;
 }
 
+/* ── Motivational Card ── */
+.dash-motivational-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  background: linear-gradient(135deg, rgba(41,98,255,0.08), rgba(255,0,60,0.06));
+  border: 1px solid rgba(41,98,255,0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+}
+.dash-motivational-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #2962FF, #FF003C, #2962FF);
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+
+.dash-motivational-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.dash-motivational-content { flex: 1; }
+.dash-motivational-text {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+.dash-motivational-source {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
 /* ── Gamification Bar ── */
 .gamification-bar {
   display: grid;

@@ -159,6 +159,9 @@ const icons = {
   briefcase: (
     <><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" /><path d="M12 12v0" /><path d="M2 12h20" /></>
   ),
+  map: (
+    <><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" /><line x1="8" y1="2" x2="8" y2="18" /><line x1="16" y1="6" x2="16" y2="22" /></>
+  ),
 };
 
 export default function Icon({ name, size = 20, color = 'currentColor', className = '', style = {} }) {
