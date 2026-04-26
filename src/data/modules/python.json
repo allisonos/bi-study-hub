@@ -1,0 +1,40 @@
+{
+  "id": "3",
+  "title": "Python para O Mundo Real",
+  "description": "Pandas, Visualizações e APIs com Pyodide embutido",
+  "trails": [
+    {
+      "id": "py_t1",
+      "title": "Trilha 1 — Fundamentos Essenciais",
+      "description": "Variáveis, dicionários, funções.",
+      "lessons": [
+        { 
+          "id": "py_t1_l1", 
+          "title": "A Estrutura de Dicíonarios (JSON Like)", 
+          "type": "theory",
+          "content": "No mercado de BI, raramente escrevemos regras puras de if/else como um programador de software clássico. Lidamos 90% das vezes com Extração de Dados via API REST.\nA estrutura mais importante do Python para BI é o DICIONÁRIO (Dictionary).\n\n```python\ncliente = {'id': 102, 'nome': 'Mário', 'LTV': 15000}\n```\nPor que isso é crítico? Porque todo JSON puro no mundo digital será lido pelo Python e automaticamente transformado em Lista ou Dicionário. Dominar o acesso e manipulação disso em Python, utilizando a biblioteca `json`, é requisito para Engenharias de Dados Básicas e ingestão." 
+        }
+      ]
+    },
+    {
+      "id": "py_t2",
+      "title": "Trilha 2 — Pandas: O Excel de 1 Bilhão de Linhas",
+      "description": "DataFrames, leitura, groupby e EDA.",
+      "lessons": [
+        { 
+          "id": "py_t2_l1", 
+          "title": "O Poder do DataFrame Vectorizado", 
+          "type": "theory",
+          "content": "Nunca escreva um `for` (loop iterativo) para modificar linhas num DataFrame da biblioteca Pandas. Isso se chama iterrows() e é incrivelmente lento.\n\nRegra Ouro: Use Vetorização.\nEm vez de:\n`for linha in df:\n   linha['imposto'] = linha['preco'] * 0.1`\n\nFaça:\n`df['imposto'] = df['preco'] * 0.1`\n\nIsso repassa toda a lógica diretamente para a base C do interpretador numérico (Numpy), rodando milhares de vezes mais rápido." 
+        },
+        { 
+          "id": "py_t2_l2", 
+          "title": "Limpando Dados Sujos em 1 Linha", 
+          "type": "practice", 
+          "task": "PythonExecution",
+          "content": "Na caixa de execução, veja na prática como instanciar Pandas e como um código simples resolve um problema. Digite:\n`import pandas as pd`\n`df = pd.DataFrame({'Lucro': ['R$1.500', 'R$900', 'NaN']})`\n`print(df)`\n\nEm um cenário de mundo real, extrairíamos os R$ usando Expressões Regulares (`str.replace`) e converteriamos `pd.to_numeric`." 
+        }
+      ]
+    }
+  ]
+}

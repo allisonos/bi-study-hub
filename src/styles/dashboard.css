@@ -1,0 +1,257 @@
+/* ═══════════════════════════════════════════════════════════════
+   Pague Menos Academy — Dashboard Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.dashboard { max-width: 1100px; margin: 0 auto; }
+
+/* ── Welcome ── */
+.dash-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+.dash-welcome h2 { font-size: 1.5rem; }
+
+.dash-level-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ── Gamification Bar ── */
+.gamification-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.gbar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+.gbar-item:hover {
+  border-color: var(--gbar-color, var(--border-accent));
+  box-shadow: 0 0 20px color-mix(in srgb, var(--gbar-color, var(--accent-primary)) 15%, transparent);
+}
+
+.gbar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--gbar-color, var(--accent-primary)) 12%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gbar-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.gbar-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── XP Card ── */
+.dash-xp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  backdrop-filter: blur(8px);
+}
+
+.dash-xp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+.dash-xp-level {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.dash-xp-amount { font-size: 0.8rem; color: var(--text-muted); }
+.dash-xp-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+/* ── Grid Layout ── */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-xl);
+}
+
+/* ── Course Cards ── */
+.dash-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.course-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  cursor: pointer;
+  transition: all var(--transition-med);
+  backdrop-filter: blur(8px);
+}
+.course-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--course-color, var(--border-accent));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 0 1px var(--course-color, transparent);
+}
+
+.course-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.course-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.course-card-title { font-size: 0.95rem; font-weight: 700; }
+.course-card-modules { font-size: 0.7rem; color: var(--text-dim); }
+.course-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+.course-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ── Coming Soon ── */
+.coming-soon-card {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-cta);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+}
+.coming-soon-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.coming-soon-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--cta-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.coming-soon-header h3 { font-size: 0.95rem; margin-bottom: 2px; }
+.coming-soon-header p { font-size: 0.78rem; color: var(--text-muted); }
+
+.coming-soon-page {
+  text-align: center;
+  padding: var(--space-3xl);
+}
+.coming-soon-page h2 { margin-top: var(--space-lg); }
+.coming-soon-page p { color: var(--text-muted); margin-top: var(--space-sm); }
+
+/* ── Side panels ── */
+.dash-side { display: flex; flex-direction: column; gap: var(--space-lg); }
+
+.dash-panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  backdrop-filter: blur(8px);
+}
+.dash-panel-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  margin-bottom: var(--space-md);
+}
+
+.dash-badges-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+.dash-badge {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+.dash-badge.earned { border-color: var(--border-accent); background: var(--accent-bg); }
+.dash-badge.locked { opacity: 0.4; }
+.dash-panel-stat { text-align: center; padding: var(--space-sm) 0; }
+
+/* ── Ranking mini ── */
+.dash-rank-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 0;
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dash-rank-item:last-child { border-bottom: none; }
+.dash-rank-pos { width: 22px; font-weight: 800; font-size: 0.75rem; color: var(--text-dim); text-align: center; }
+.dash-rank-pos.top-1 { color: #F59E0B; }
+.dash-rank-pos.top-2 { color: #94A3B8; }
+.dash-rank-pos.top-3 { color: #D97706; }
+.dash-rank-name { flex: 1; font-weight: 500; }
+.dash-rank-name.is-you { color: var(--cta); font-weight: 700; }
+.dash-rank-xp { font-weight: 600; color: var(--text-muted); font-size: 0.75rem; }

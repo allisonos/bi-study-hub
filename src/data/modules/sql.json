@@ -1,0 +1,60 @@
+{
+  "id": "2",
+  "title": "SQL",
+  "description": "Banco de Dados Interativo com sql.js",
+  "trails": [
+    {
+      "id": "sql_t1",
+      "title": "Trilha 1 — Fundamentos",
+      "description": "SELECT, FROM, WHERE, ORDER BY, LIMIT.",
+      "lessons": [
+        { 
+          "id": "sql_t1_l1", 
+          "title": "A Base da Consulta Analítica", 
+          "type": "theory",
+          "content": "No BI, passamos 80% do tempo fazendo `SELECT`. \n\nA Ordem de Execução do motor SQL não é a ordem que você escreve.\nOrdem em que você escreve: SELECT -> FROM -> WHERE -> GROUP BY -> HAVING -> ORDER BY \nOrdem de execução real no disco: FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY.\n\nSaber isso muda tudo: você não pode usar um alias (apelido) criado no SELECT dentro do seu WHERE, porque o WHERE roda antes do motor ler o seu SELECT." 
+        },
+        { 
+          "id": "sql_t1_l2", 
+          "title": "Filtrando dados com WHERE", 
+          "type": "practice", 
+          "task": "SQLExecution",
+          "content": "No terminal abaixo, crie uma query (consulta) que acesse todos os registros (`*`) da tabela `dados`, retorne apenas quem está no estado de `'SP'` e que tenha vendas superiores a `1000`.",
+          "expectedRowCount": 2
+        }
+      ]
+    },
+    {
+      "id": "sql_t2",
+      "title": "Trilha 2 — Intermediário",
+      "description": "JOINs, GROUP BY, HAVING, subqueries.",
+      "lessons": [
+        { 
+          "id": "sql_t2_l1", 
+          "title": "Agregações Ocultas (GROUP BY)", 
+          "type": "theory",
+          "content": "Toda vez que você quiser 'somar' o dinheiro por estado, você precisa agrupar.\n\n`SELECT estado, SUM(vendas) as total FROM dados GROUP BY estado;`\n\nNUNCA coloque no GROUP BY a mesma métrica agregada. Tudo que não for uma função matemática (SUM, AVG, COUNT, MIN, MAX) tem que ir pro GROUP BY." 
+        },
+        { 
+          "id": "sql_t2_l2", 
+          "title": "Relacionando tabelas (INNER vs LEFT)", 
+          "type": "theory",
+          "content": "Tem uma regra de ouro em Modelagem Dimensional vs SQL Corporativo: na dúvida para trazer métricas de vendas (Fato) e enriquecer com Produto (Dimensão), use `LEFT JOIN` partindo da tabela mais importante (a Fato).\nSe você usar `INNER JOIN`, e um produto tiver sido deletado do catálogo, a venda vai desaparecer do seu painel e a receita vai deixar um rombo." 
+        }
+      ]
+    },
+    {
+      "id": "sql_t3",
+      "title": "Trilha 3 — Avançado para Consultores",
+      "description": "Window Functions, CTEs, CASE WHEN, performance.",
+      "lessons": [
+        { 
+          "id": "sql_t3_l1", 
+          "title": "CTEs e Limpeza de Lógica", 
+          "type": "theory",
+          "content": "CTE (Common Table Expression):\nÉ usar a claúsula `WITH sub_query AS (SELECT * FROM...)` no início do código.\nDiferente de Subqueries normais (que ficam engessadas no FROM e você perde rastreabilidade), a CTE funciona como uma 'variável' no topo do seu SQL. Você empilha várias CTEs para limpar dados, tratar strings, e no final só faz um SELECT juntando todas.\nEm bancos como Snowflake ou BigQuery, CTEs bem estruturadas são cacheadas e otimizam sua fatura de dólares." 
+        }
+      ]
+    }
+  ]
+}

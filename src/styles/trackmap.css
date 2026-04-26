@@ -1,0 +1,222 @@
+/* ═══════════════════════════════════════════════════════════════
+   Pague Menos Academy — Track Map / Course Map Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.trackmap { max-width: 900px; margin: 0 auto; }
+
+/* ── Back button ── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border: none;
+  background: none;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-sans);
+}
+.back-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+/* ── Header ── */
+.trackmap-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.trackmap-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trackmap-info h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: var(--space-xs); }
+.trackmap-info p { color: var(--text-secondary); font-size: 0.9rem; }
+
+.trackmap-progress-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+.trackmap-progress-row .progress-bar { flex: 1; max-width: 300px; }
+.trackmap-progress-label { font-size: 0.8rem; font-weight: 700; color: var(--accent-light); }
+
+/* ── Track Course Cards (for TrackView) ── */
+.track-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-lg);
+}
+
+.track-course-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  cursor: pointer;
+  transition: all var(--transition-med);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.track-course-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--course-color, var(--border-accent));
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+}
+
+.track-course-number {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+}
+
+.track-course-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+}
+
+.track-course-card h3 { font-size: 1.1rem; margin-bottom: var(--space-xs); }
+.track-course-card p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: var(--space-md); line-height: 1.5; }
+
+.track-course-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.track-course-stats span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.track-course-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── Module Nodes (Roadmap in CourseMap) ── */
+.trackmap-modules {
+  position: relative;
+  padding-left: 40px;
+}
+.trackmap-modules::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-default);
+}
+
+.module-node {
+  position: relative;
+  margin-bottom: var(--space-xl);
+  cursor: pointer;
+}
+
+.module-node-dot {
+  position: absolute;
+  left: -30px;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 3px solid var(--border-default);
+  z-index: 2;
+  transition: all var(--transition-med);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module-node.completed .module-node-dot {
+  border-color: var(--success);
+  background: var(--success);
+}
+.module-node.in-progress .module-node-dot {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px rgba(33, 51, 221, 0.4);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(33, 51, 221, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(33, 51, 221, 0.6); }
+}
+
+.module-node-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: all var(--transition-med);
+  backdrop-filter: blur(8px);
+}
+.module-node:hover .module-node-card {
+  border-color: var(--border-accent);
+  box-shadow: 0 4px 20px rgba(33, 51, 221, 0.1);
+  transform: translateX(4px);
+}
+
+.module-node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+.module-node-title { font-size: 1rem; font-weight: 700; }
+.module-node-desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: var(--space-md); }
+
+.module-node-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.module-node-meta span { display: flex; align-items: center; gap: 4px; }
+
+.module-node-progress { margin-top: var(--space-md); }
+.module-node-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
