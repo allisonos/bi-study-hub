@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/bi-study-hub/sw.js', { scope: '/bi-study-hub/' })})}
