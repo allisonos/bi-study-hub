@@ -1,14 +1,13 @@
 {
-  "name": "plataform-analista-de-dados",
+  "name": "bi-study-hub",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "deploy": "vite build && copy dist\\index.html dist\\200.html && surge ./dist --domain datapulse-platform.surge.sh"
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^19.2.4",
@@ -29,3 +28,4 @@
     "vite-plugin-pwa": "^1.2.0"
   }
 }
+
