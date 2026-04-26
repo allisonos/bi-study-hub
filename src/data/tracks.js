@@ -55,10 +55,22 @@ export const tracks = [
       mapCourse(powerbi, 'dados', 'bar-chart', '#F2C811', 'linear-gradient(135deg, #F2C811, #FFDA44)'),
       mapCourse(python, 'dados', 'code', '#3B82F6', 'linear-gradient(135deg, #2563EB, #3B82F6)'),
       mapCourse(sql, 'dados', 'database', '#10B981', 'linear-gradient(135deg, #059669, #10B981)'),
-      mapCourse(negocios, 'dados', 'briefcase', '#8B5CF6', 'linear-gradient(135deg, #7C3AED, #8B5CF6)')
     ],
-  }
+  },
+  {
+    id: 'comercial',
+    name: 'Trilha Comercial',
+    icon: 'briefcase',
+    color: '#8B5CF6',
+    gradient: 'linear-gradient(135deg, #7C3AED, #8B5CF6)',
+    description: 'Pense como um Analista de BI em contexto comercial real. Exemplos B2B e B2C brasileiras.',
+    comingSoon: false,
+    courses: [
+      mapCourse(negocios, 'comercial', 'briefcase', '#8B5CF6', 'linear-gradient(135deg, #7C3AED, #8B5CF6)'),
+    ],
+  },
 ];
+
 
 // ── Helpers ──
 export const getTrackById = (id) => tracks.find(t => t.id === id);

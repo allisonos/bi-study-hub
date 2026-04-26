@@ -5,11 +5,11 @@
 const STORAGE_KEY = 'datapulse_state_v2';
 
 const initialState = {
-  user: { name: '', goal: '' },
+  user: { name: '', goal: '', musicGenre: 'any' },
   xp: 0,
-  xbolts: 0,          // Xperiun: aprendizado aplicado (exercícios)
-  xcoins: 0,          // Xperiun: moeda virtual (conquistas)
-  xcore: 0,           // Xperiun: consistência de acesso
+  xbolts: 0,
+  xcoins: 0,
+  xcore: 0,
   completedLessons: [],
   completedQuizzes: {},
   completedExercises: [],
@@ -17,6 +17,8 @@ const initialState = {
   earnedBadges: [],
   streak: { current: 0, lastDate: null },
   onboarded: false,
+  roadmapProgress: { junior: {}, pleno: {}, senior: {} },
+  motivationalIndex: -1,
 };
 
 export const getState = () => {
